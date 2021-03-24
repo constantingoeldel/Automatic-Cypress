@@ -1,7 +1,6 @@
-const WebSocket = require('ws')
-
-import cypress from './cypress'
-import { getWebsocketUrl, sendMessageToSlack } from './axios'
+import WebSocket from 'ws'
+import cypress from './cypressExec.js'
+import { getWebsocketUrl, sendMessageToSlack } from './axios.js'
 
 connectToSlack()
 
@@ -21,11 +20,14 @@ async function connectToSlack() {
     parsedMessage.envelope_id &&
       Slack.send(JSON.stringify({ envelope_id: parsedMessage.envelope_id }))
 
-    const testResult =
-      parsedMessage.type === 'interactive' &&
-      dissectMessage(parsedMessage).forEach(url => cypress(url, 'birthday'))
+    parsedMessage.type === 'interactive' &&
+      dissectMessage(parsedMessage).forEach(url => {
+        cypress(responseUrl, 'birthday')
+          .then(testResult => sendMessageToSlack(responseUrl, testResult))
+          .catch(error => console.log(error))
+      })
 
-    responseUrl && testResult && sendMessageToSlack(responseUrl, testResult)
+    // responseUrl && testResult && sendMessageToSlack(responseUrl, testResult)
   }
   return Slack
 }

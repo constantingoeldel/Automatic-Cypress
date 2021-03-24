@@ -1,5 +1,6 @@
-require('dotenv').config()
-const axios = require('axios')
+import dotenv from 'dotenv'
+dotenv.config()
+import axios from 'axios'
 
 export async function getWebsocketUrl() {
   let response
@@ -22,12 +23,13 @@ export async function getWebsocketUrl() {
 }
 
 export async function sendMessageToSlack(url, text) {
+  console.log('I got called', url, text.slice(100))
   let messageResponse
   const messageToSlack = {
     method: 'POST',
     url: url,
     headers: { 'Content-Type': 'application/json' },
-    data: { text: text },
+    data: { text: '```' + text + '```' },
   }
   try {
     messageResponse = await axios(messageToSlack)
