@@ -4,7 +4,7 @@ let numPersons = null
 
 describe('The ultimate test for the birthday app', () => {
   beforeEach(() => {
-    cy.visit('https://clopedia-bithday-app.netlify.app/')
+    cy.visit(Cypress.env('url'))
     cy.get('img', { timeout: 10000 })
   })
   it('Has a working name filter', () => {
@@ -42,7 +42,7 @@ describe('The ultimate test for the birthday app', () => {
   })
   it('checks for first name', () => {
     cy.contains('Add somebody').click()
-    cy.get('form').contains('Last name').click().type('Goeldel')
+    cy.get('form').contains('Lastname').click().type('Goeldel')
     cy.get('form').get('input[type=date]').click().type('2002-09-14')
     cy.get('form').contains('Avatar image').click().type('https://www.dings.de')
     cy.get('form').contains('Submit').click()
@@ -50,7 +50,7 @@ describe('The ultimate test for the birthday app', () => {
   })
   it('checks for last name', () => {
     cy.contains('Add somebody').click()
-    cy.get('form').contains('First name').click().type('Constantin')
+    cy.get('form').contains('Firstname').click().type('Constantin')
     cy.get('form').get('input[type=date]').click().type('2002-09-14')
     cy.get('form').contains('Avatar image').click().type('https://www.dings.de')
     cy.get('form').contains('Submit').click()
@@ -58,8 +58,8 @@ describe('The ultimate test for the birthday app', () => {
   })
   it('checks for wrong date', () => {
     cy.contains('Add somebody').click()
-    cy.get('form').contains('First name').click().type('Constantin')
-    cy.get('form').contains('Last name').click().type('Goeldel')
+    cy.get('form').contains('Firstname').click().type('Constantin')
+    cy.get('form').contains('Lastname').click().type('Goeldel')
     cy.get('form').get('input[type=date]').click().type('2022-09-14')
     cy.get('form').contains('Avatar image').click().type('https://www.dings.de')
     cy.get('form').contains('Submit').click()
@@ -67,8 +67,8 @@ describe('The ultimate test for the birthday app', () => {
   })
   it('checks for wrong url', () => {
     cy.contains('Add somebody').click()
-    cy.get('form').contains('First name').click().type('Constantin')
-    cy.get('form').contains('Last name').click().type('Goeldel')
+    cy.get('form').contains('Firstname').click().type('Constantin')
+    cy.get('form').contains('Lastname').click().type('Goeldel')
     cy.get('form').get('input[type=date]').click().type('2002-09-14')
     cy.get('form').contains('Avatar image').click().type('wrong url')
     cy.get('form').contains('Submit').click()
@@ -76,8 +76,8 @@ describe('The ultimate test for the birthday app', () => {
   })
   it('Submits when everything is correct', () => {
     cy.contains('Add somebody').click()
-    cy.get('form').contains('First name').click().type('Constantin')
-    cy.get('form').contains('Last name').click().type('Goeldel')
+    cy.get('form').contains('Firstname').click().type('Constantin')
+    cy.get('form').contains('Lastname').click().type('Goeldel')
     cy.get('form').get('input[type=date]').click().type('2002-09-14')
     cy.get('form').contains('Avatar image').click().type('wrong url')
     cy.get('form').contains('Submit').click()

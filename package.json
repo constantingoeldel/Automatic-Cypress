@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open"
+    "start": "nodemon ./server.js",
+    "birthday": "cypress run --spec 'cypress/integration/birthdayApp.spec.js' --env url=$URL",
+    "cypress": "cypress open --env url=$URL"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^6.8.0"
+    "cypress": "^6.8.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7",
+    "ws": "^7.4.4"
   }
 }
