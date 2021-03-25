@@ -22,12 +22,10 @@ async function connectToSlack() {
 
     parsedMessage.type === 'interactive' &&
       dissectMessage(parsedMessage).forEach(url => {
-        cypress(responseUrl, 'birthday')
+        cypress(url, 'birthday')
           .then(testResult => sendMessageToSlack(responseUrl, testResult))
           .catch(error => console.log(error))
       })
-
-    // responseUrl && testResult && sendMessageToSlack(responseUrl, testResult)
   }
   return Slack
 }
