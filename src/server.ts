@@ -3,13 +3,13 @@ import WebSocket, { Data, MessageEvent, OpenEvent } from 'ws'
 
 import cypress from './cypressExec.js'
 import { getWebsocketUrl, sendMessageToSlack } from './axios.js'
-import { shareMedia, dissectMessage, shareTestResult } from './helpers.js'
+import { shareMedia, dissectMessage, shareTestResult, supportedApp } from './helpers.js'
 
 interface open extends OpenEvent {
   type?: string
 }
 
-const supportedApps: ['birthday'] = ['birthday']
+const supportedApps: supportedApp[] = ['birthday', 'photo', 'country']
 connectToSlack()
 
 async function connectToSlack() {

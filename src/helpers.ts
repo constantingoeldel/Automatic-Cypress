@@ -1,5 +1,27 @@
 import { exec } from 'child_process'
 
+export type supportedApp = 'birthday' | 'photo' | 'country'
+
+interface msg {
+  payload: {
+    message: {
+      text: string
+    }
+  }
+}
+
+type dissectedMessage =
+  | {
+      ok: true
+      url: string
+      type: supportedApp
+    }
+  | {
+      ok: false
+      url: null
+      type: null
+    }
+
 export function shareMedia(testIdentifier: string) {
   exec(
     `cp -r /home/onja/cypress/Automatic-Cypress/cypress/screenshots/birthdayApp.spec.js/ /home/onja/onja-be/public/ftp/CypressTests && cd  /home/onja/onja-be/public/ftp/CypressTests/ && mv birthdayApp.spec.js/ ${testIdentifier} && cd ${testIdentifier} && rename 's/The ultimate test for the birthday app -- /Test /' *.png && cp /home/onja/cypress/Automatic-Cypress/cypress/videos/birthdayApp.spec.js.mp4 /home/onja/onja-be/public/ftp/CypressTests/${testIdentifier}/ && mv birthdayApp.spec.js.mp4 Video_of_Test.mp4`,
@@ -27,27 +49,7 @@ export function shareTestResult(testIdentifier: string, text: string) {
   })
 }
 
-interface msg {
-  payload: {
-    message: {
-      text: string
-    }
-  }
-}
-
-type dissectedMessage =
-  | {
-      ok: true
-      url: string
-      type: 'birthday'
-    }
-  | {
-      ok: false
-      url: null
-      type: null
-    }
-
-export function dissectMessage(supportedApps: ['birthday'], message: msg): dissectedMessage {
+export function dissectMessage(supportedApps: supportedApp[], message: msg): dissectedMessage {
   const content = message.payload.message.text
   const urls = content.match(/(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/gm)
   const deployedUrl = (urls && urls.filter(url => url.includes('netlify') || url.includes('vercel'))[0]) || null
