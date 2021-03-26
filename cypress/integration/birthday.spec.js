@@ -4,7 +4,11 @@ let numPersons = null
 
 describe('The ultimate test for the birthday app', () => {
   beforeEach(() => {
-    cy.visit(Cypress.env('url'))
+    cy.visit(Cypress.env('url'), {
+      onBeforeLoad(win) {
+        cy.stub(win.console, 'error').as('consoleError')
+      },
+    })
     cy.get('img', { timeout: 10000 })
   })
   it('Has a working name filter', () => {
@@ -31,9 +35,7 @@ describe('The ultimate test for the birthday app', () => {
     cy.get('input').type('C')
     cy.get('img').then(persons => (filteredNumPeople = persons.length))
     cy.get('select').select('September')
-    cy.get('img').then(persons =>
-      expect(persons.length).to.be.lessThan(numPersons).and.to.be.lessThan(filteredNumPeople)
-    )
+    cy.get('img').then(persons => expect(persons.length).to.be.lessThan(numPersons).and.to.be.lessThan(filteredNumPeople))
   })
 
   it('has a button to add people', () => {
@@ -88,5 +90,8 @@ describe('The ultimate test for the birthday app', () => {
         cy.contains('Delete').click()
       })
     cy.get('img').then(persons => expect(persons.length).to.be.equal(numPersons - 1))
+  })
+  it('does not have any errors in the console', () => {
+    cy.get('@consoleError').should('not.have.been.called')
   })
 })
