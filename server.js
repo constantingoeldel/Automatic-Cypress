@@ -2,7 +2,7 @@ import WebSocket from 'ws'
 
 import cypress from './src/cypressExec.js'
 import { getWebsocketUrl, sendMessageToSlack } from './src/axios.js'
-import { shareMedia, dissectMessage } from './src/helpers.js'
+import { shareMedia, dissectMessage, shareTestResult } from './src/helpers.js'
 
 connectToSlack()
 
