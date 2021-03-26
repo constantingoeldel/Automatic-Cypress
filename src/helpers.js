@@ -11,7 +11,22 @@ export function shareMedia(testIdentifier) {
       if (stderr) {
         console.log(stderr)
       }
-      return 'http://192.168.50.233:3000/ftp/CypressTests/' + testIdentifier
+      console.log('sharing media...')
+    }
+  )
+}
+
+export function shareTestResult(testIdentifier, text) {
+  exec(
+    `cd /home/onja/onja-be/public/ftp/CypressTests/${testIdentifier} && echo ${text} > Test_Result.txt`,
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(error)
+      }
+      if (stderr) {
+        console.log(stderr)
+      }
+      console.log('sharing test result...')
     }
   )
 }

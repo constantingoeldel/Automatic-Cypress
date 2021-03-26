@@ -24,11 +24,18 @@ async function connectToSlack() {
 
     parsedMessage.type === 'interactive' &&
       dissectMessage(parsedMessage).forEach(url => {
-        sendMessageToSlack(responseUrl, 'Running test for birthday app on url ' + url + '!')
+        sendMessageToSlack(
+          responseUrl,
+          ':robot_face: Running test for birthday app on url ' + url + '!'
+        )
         cypress(url, 'birthday')
           .then(testResult => {
             shareMedia(parsedMessage.envelope_id)
-            sendMessageToSlack(responseUrl, testResult)
+            shareTestResult(parsedMessage.envelope_id, testResult)
+            sendMessageToSlack(
+              responseUrl,
+              `:robot_face: Your test result is now available @  **http://192.168.50.233:3000/ftp/CypressTests/${testIdentifier}**. \n It contains a written summary of the test as well as screenshots and videos of failed tests :)`
+            )
           })
           .catch(error => console.log(error))
       })

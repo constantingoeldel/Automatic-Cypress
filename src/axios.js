@@ -29,7 +29,7 @@ export async function sendMessageToSlack(url, text) {
     method: 'POST',
     url: url,
     headers: { 'Content-Type': 'application/json' },
-    data: { text: '```' + text + '```' },
+    data: { text: text },
   }
   try {
     messageResponse = await axios(messageToSlack)
