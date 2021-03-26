@@ -32,7 +32,7 @@ async function connectToSlack() {
       sendMessageToSlack(
         responseUrl,
         message.ok
-          ? ':robot_face: Running test for birthday app on url ' + message.url + '!'
+          ? ':robot_face: Running test for ' + message.type + ' app on url ' + message.url + '!'
           : 'I can not find any valid link in this message. If there should be one, please contact Constantin'
       )
       message.ok &&
