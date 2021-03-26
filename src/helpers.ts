@@ -22,9 +22,9 @@ type dissectedMessage =
       type: null
     }
 
-export function shareMedia(testIdentifier: string) {
+export function shareMedia(testIdentifier: string, test: supportedApp, testResult: string) {
   exec(
-    `cp -r /home/onja/cypress/Automatic-Cypress/cypress/screenshots/birthdayApp.spec.js/ /home/onja/onja-be/public/ftp/CypressTests && cd  /home/onja/onja-be/public/ftp/CypressTests/ && mv birthdayApp.spec.js/ ${testIdentifier} && cd ${testIdentifier} && rename 's/The ultimate test for the birthday app -- /Test /' *.png && cp /home/onja/cypress/Automatic-Cypress/cypress/videos/birthdayApp.spec.js.mp4 /home/onja/onja-be/public/ftp/CypressTests/${testIdentifier}/ && mv birthdayApp.spec.js.mp4 Video_of_Test.mp4`,
+    `cp -r /home/onja/cypress/Automatic-Cypress/cypress/screenshots/${test}.spec.js/ /home/onja/onja-be/public/ftp/CypressTests && cd  /home/onja/onja-be/public/ftp/CypressTests/ && mv ${test}.spec.js/ ${testIdentifier} && cd ${testIdentifier} && rename 's/The ultimate test for the birthday app -- /Test /' *.png && cp /home/onja/cypress/Automatic-Cypress/cypress/videos/${test}.spec.js.mp4 /home/onja/onja-be/public/ftp/CypressTests/${testIdentifier}/ && mv ${test}.spec.js.mp4 Video_of_Test.mp4`,
     (error, stdout, stderr) => {
       if (error) {
         console.log(error)
@@ -33,6 +33,7 @@ export function shareMedia(testIdentifier: string) {
         console.log(stderr)
       }
       console.log('sharing media...')
+      shareTestResult(testIdentifier, testResult)
     }
   )
 }

@@ -38,11 +38,10 @@ async function connectToSlack() {
       message.ok &&
         cypress(message.url, message.type)
           .then(testResult => {
-            shareMedia(parsedMessage.envelope_id)
-            shareTestResult(parsedMessage.envelope_id, testResult)
+            shareMedia(parsedMessage.envelope_id, message.type, testResult)
             sendMessageToSlack(
               responseUrl,
-              `:robot_face: Your test result is now available @  **http://192.168.50.233:3000/ftp/CypressTests/${parsedMessage.envelope_id}**. \n It contains a written summary of the test as well as screenshots and videos of failed tests :)`
+              `:robot_face: Your test result is now available @  **http://192.168.50.233:3000/ftp/CypressTests/${parsedMessage.envelope_id} **. \n It contains a written summary of the test as well as screenshots and videos of failed tests :)`
             )
           })
           .catch(error => console.log(error))

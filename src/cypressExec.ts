@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
+import { supportedApp } from './helpers'
 
-export default async function cypress(url: string, app: string) {
+export default async function cypress(url: string, app: supportedApp) {
   console.log(`Cypress test started for ${app} app on url ${url}`)
 
   const testResult = new Promise<string>((resolve, reject) => {

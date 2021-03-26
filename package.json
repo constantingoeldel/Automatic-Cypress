@@ -6,7 +6,9 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "tsc --watch & nodemon .dist/server.js ",
-    "birthday": "cypress run --spec 'cypress/integration/birthdayApp.spec.js' --env url=$URL",
+    "birthday": "cypress run --spec 'cypress/integration/birthday.spec.js' --env url=$URL",
+    "photo": "cypress run --spec 'cypress/integration/photo.spec.js' --env url=$URL",
+    "country": "cypress run --spec 'cypress/integration/country.spec.js' --env url=$URL",
     "cypress": "cypress open --env url=$URL"
   },
   "keywords": [],
