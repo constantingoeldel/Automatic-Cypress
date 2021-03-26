@@ -1,9 +1,9 @@
 import { exec } from 'child_process'
 
-export default async function cypress(url, app) {
+export default async function cypress(url: string, app: string) {
   console.log(`Cypress test started for ${app} app on url ${url}`)
 
-  const testResult = new Promise((resolve, reject) => {
+  const testResult = new Promise<string>((resolve, reject) => {
     exec(`URL="${url}" npm run ${app}`, (error, stdout, stderr) => {
       stdout && resolve(stdout)
       error && reject(error)

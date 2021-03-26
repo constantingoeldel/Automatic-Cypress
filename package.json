@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "nodemon ./server.js",
+    "start": "tsc --watch & nodemon .dist/server.js ",
     "birthday": "cypress run --spec 'cypress/integration/birthdayApp.spec.js' --env url=$URL",
     "cypress": "cypress open --env url=$URL"
   },
@@ -17,6 +17,10 @@
     "cypress": "^6.8.0",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.7",
+    "typescript": "^4.2.3",
     "ws": "^7.4.4"
+  },
+  "devDependencies": {
+    "@types/ws": "^7.4.0"
   }
 }
