@@ -1,6 +1,8 @@
 import WebSocket from 'ws'
-import cypress from './cypressExec.js'
-import { getWebsocketUrl, sendMessageToSlack } from './axios.js'
+
+import cypress from './src/cypressExec.js'
+import { getWebsocketUrl, sendMessageToSlack } from './src/axios.js'
+import { shareMedia, dissectMessage } from './src/helpers.js'
 
 connectToSlack()
 
@@ -24,17 +26,12 @@ async function connectToSlack() {
       dissectMessage(parsedMessage).forEach(url => {
         sendMessageToSlack(responseUrl, 'Running test for birthday app on url ' + url + '!')
         cypress(url, 'birthday')
-          .then(testResult => sendMessageToSlack(responseUrl, testResult))
+          .then(testResult => {
+            shareMedia(parsedMessage.envelope_id)
+            sendMessageToSlack(responseUrl, testResult)
+          })
           .catch(error => console.log(error))
       })
   }
   return Slack
-}
-
-function dissectMessage(message) {
-  const content = message.payload.message.text
-  const urls = content.match(
-    /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/gm
-  )
-  return urls && urls.filter(url => url.includes('netlify') | url.includes('vercel'))
 }

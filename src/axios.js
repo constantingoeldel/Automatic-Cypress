@@ -23,7 +23,7 @@ export async function getWebsocketUrl() {
 }
 
 export async function sendMessageToSlack(url, text) {
-  console.log('I got called', url, text.slice(100))
+  console.log('Sending message to', url)
   let messageResponse
   const messageToSlack = {
     method: 'POST',
